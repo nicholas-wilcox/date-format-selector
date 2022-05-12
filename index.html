@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Data Format Selector</title>
+		<link rel="stylesheet" href="./styles.css">
+		<script src="./main.js" defer></script>
+	</head>
+	<body>
+		<h1 class="mainHeader">Data Format Selector</h1>
+		<form action="" id="dateFormatSelectorForm">
+			<label for="inputDate">Input Date:</label>
+			<input type="datetime-local" step="1" id="inputDate" name="inputDate">
+			<button type="button" id="computeDateButton">Compute Date</button>
+		</form>
+		<div id="output">
+			<table>
+				<colgroup>
+					<col class="functionName">
+					<col class="functionOutput">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>Function</th>
+						<th>Output</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="toStringLabel" class="functionNameLabel">toString</td>
+						<td id="toStringOutput"></td>
+					</tr>
+					<tr>
+						<td id="toDateStringLabel" class="functionNameLabel">toDateString</td>
+						<td id="toDateStringOutput"></td>
+					</tr>
+					<tr>
+						<td id="toTimeStringLabel" class="functionNameLabel">toTimeString</td>
+						<td id="toTimeStringOutput"></td>
+					</tr>
+					<tr>
+						<td id="toISOStringLabel" class="functionNameLabel">toISOString</td>
+						<td id="toISOStringOutput"></td>
+					</tr>
+					<tr>
+						<td id="toUTCStringLabel" class="functionNameLabel">toUTCString</td>
+						<td id="toUTCStringOutput"></td>
+					</tr>
+					<tr>
+						<td id="toLocaleStringLabel" class="functionNameLabel">toLocaleString</td>
+						<td id="toLocaleStringOutput"></td>
+					</tr>
+					<tr>
+						<td id="toLocaleDateStringLabel" class="functionNameLabel">toLocaleDateString</td>
+						<td id="toLocaleDateStringOutput"></td>
+					</tr>
+					<tr>
+						<td id="toLocaleTimeStringLabel" class="functionNameLabel">toLocaleTimeString</td>
+						<td id="toLocaleTimeStringOutput"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

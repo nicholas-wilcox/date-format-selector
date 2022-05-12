@@ -1,0 +1,12 @@
+.mainHeader {
+	text-align: center;
+}
+
+.functionName {
+	width: min-content;
+}
+
+.functionNameLabel {
+	font-family: monospace;
+	text-align: right;
+}
