@@ -10,16 +10,19 @@ const functionNames = [
 ];
 
 let inputDate;
-const computeDateButton = document.querySelector('#computeDateButton');
+const inputDateSelector = document.querySelector('#inputDate');
 const useNowCheckbox = document.querySelector('#useNow');
 let updateDateInterval;
 
-function computeDate() {
+function computeInputDate() {
+	useNowCheckbox.checked = false;
 	clearInterval(updateDateInterval);
 	const form = document.querySelector('#dateFormatSelectorForm');
 	const formData = new FormData(form);
-	inputDate = new Date(formData.get('inputDate'));
-	updateOutput();
+	if (formData.get('inputDate')) {
+		inputDate = new Date(formData.get('inputDate'));
+		updateOutput();
+	}
 }
 
 function updateOutput() {
@@ -31,6 +34,7 @@ function updateOutput() {
 function toggleUseNow() {
 	clearInterval(updateDateInterval);
 	if (useNowCheckbox.checked) {
+		inputDateSelector.value = "";
 		setInputDateToNow();
 		updateDateInterval = setInterval(setInputDateToNow, 1000);
 	}
@@ -41,5 +45,5 @@ function setInputDateToNow() {
 	updateOutput();
 }
 
-computeDateButton.addEventListener('click', computeDate);
 useNowCheckbox.addEventListener('change', toggleUseNow);
+inputDateSelector.addEventListener('input', computeInputDate);
