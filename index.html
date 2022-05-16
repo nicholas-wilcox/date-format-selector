@@ -8,37 +8,65 @@
 	</head>
 	<body>
 		<h1 class="mainHeader">Date Format Selector</h1>
-		<form action="" id="dateFormatSelectorForm">
-			<label for="inputDate">Input Date:</label>
-			<input type="datetime-local" step="1" id="inputDate" name="inputDate">
-			<br>
-			<input type="checkbox" id="useNow" name="useNow">
-			<label for="useNow">Use Current Time</label>
-
-			<!-- Formatting Options -->
+		<form id="inputDateForm">
 			<div>
-				<h3>dateStyle</h3>
-				<input type="radio" id="dateStyleFull" name="dateStyle" value="full">
-				<label for="dateStyleFull">full</label>
-				<input type="radio" id="dateStyleLong" name="dateStyle" value="long">
-				<label for="dateStyleLong">long</label>
-				<input type="radio" id="dateStyleMedium" name="dateStyle" value="medium">
-				<label for="dateStyleMedium">medium</label>
-				<input type="radio" id="dateStyleShort" name="dateStyle" value="short">
-				<label for="dateStyleShort">short</label>
-
-				<h3>timeStyle</h3>
-				<input type="radio" id="timeStyleFull" name="timeStyle" value="full">
-				<label for="timeStyleFull">full</label>
-				<input type="radio" id="timeStyleLong" name="timeStyle" value="long">
-				<label for="timeStyleLong">long</label>
-				<input type="radio" id="timeStyleMedium" name="timeStyle" value="medium">
-				<label for="timeStyleMedium">medium</label>
-				<input type="radio" id="timeStyleShort" name="timeStyle" value="short">
-				<label for="timeStyleShort">short</label>
+				<label for="inputDate">Input Date:</label>
+				<input type="datetime-local" step="1" id="inputDate" name="inputDate">
+			</div>
+			<div>
+				<input type="checkbox" id="useNow" name="useNow">
+				<label for="useNow">Use Current Time</label>
 			</div>
 		</form>
-		<div id="output">
+
+		<form id="outputVisibilityForm">
+			<div>
+				<label for="showNonLocale">
+					<input type="radio" id="showNonLocale" name="showNonLocale" value="true">
+					Show non-Locale output
+				</label>
+				<label for="hideNonLocale">
+					<input type="radio" id="hideNonLocale" name="showNonLocale" value="false">
+					Hide non-Locale output
+				</label>
+			</div>
+
+			<div>
+				<label for="showRedundant">
+					<input type="radio" id="showRedundant" name="showRedundant" value="true">
+					Show redundant Date/Time output
+				</label>
+				<label for="hideRedundant">
+					<input type="radio" id="hideRedundant" name="showRedundant" value="false">
+					Hide redundant Date/Time output
+				</label>
+			</div>
+		</form>
+
+
+		<!-- Formatting Options -->
+		<form id="formatOptionsForm">
+			<h3>dateStyle</h3>
+			<input type="radio" id="dateStyleFull" name="dateStyle" value="full">
+			<label for="dateStyleFull">full</label>
+			<input type="radio" id="dateStyleLong" name="dateStyle" value="long">
+			<label for="dateStyleLong">long</label>
+			<input type="radio" id="dateStyleMedium" name="dateStyle" value="medium">
+			<label for="dateStyleMedium">medium</label>
+			<input type="radio" id="dateStyleShort" name="dateStyle" value="short">
+			<label for="dateStyleShort">short</label>
+
+			<h3>timeStyle</h3>
+			<input type="radio" id="timeStyleFull" name="timeStyle" value="full">
+			<label for="timeStyleFull">full</label>
+			<input type="radio" id="timeStyleLong" name="timeStyle" value="long">
+			<label for="timeStyleLong">long</label>
+			<input type="radio" id="timeStyleMedium" name="timeStyle" value="medium">
+			<label for="timeStyleMedium">medium</label>
+			<input type="radio" id="timeStyleShort" name="timeStyle" value="short">
+			<label for="timeStyleShort">short</label>
+		</form>
+		<div id="output" class="hidden">
 			<table>
 				<colgroup>
 					<col class="functionName">
@@ -51,35 +79,35 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="ts">
 						<td id="toStringLabel" class="functionNameLabel">toString</td>
 						<td id="toStringOutput"></td>
 					</tr>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="tds">
 						<td id="toDateStringLabel" class="functionNameLabel">toDateString</td>
 						<td id="toDateStringOutput"></td>
 					</tr>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="tts">
 						<td id="toTimeStringLabel" class="functionNameLabel">toTimeString</td>
 						<td id="toTimeStringOutput"></td>
 					</tr>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="tis">
 						<td id="toISOStringLabel" class="functionNameLabel">toISOString</td>
 						<td id="toISOStringOutput"></td>
 					</tr>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="tus">
 						<td id="toUTCStringLabel" class="functionNameLabel">toUTCString</td>
 						<td id="toUTCStringOutput"></td>
 					</tr>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="tls">
 						<td id="toLocaleStringLabel" class="functionNameLabel">toLocaleString</td>
 						<td id="toLocaleStringOutput"></td>
 					</tr>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="tlds">
 						<td id="toLocaleDateStringLabel" class="functionNameLabel">toLocaleDateString</td>
 						<td id="toLocaleDateStringOutput"></td>
 					</tr>
-					<tr>
+					<tr class="dateStringOutputRow" row-code="tlts">
 						<td id="toLocaleTimeStringLabel" class="functionNameLabel">toLocaleTimeString</td>
 						<td id="toLocaleTimeStringOutput"></td>
 					</tr>

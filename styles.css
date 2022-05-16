@@ -10,3 +10,7 @@
 	font-family: monospace;
 	text-align: right;
 }
+
+.hidden {
+	display: none
+}
