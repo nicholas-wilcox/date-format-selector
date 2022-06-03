@@ -12,5 +12,12 @@
 }
 
 .hidden {
-	display: none
+	display: none;
+}
+
+#formatOptionsForm {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(25%, max-content));
+	border: 1px solid black;
+	padding: 1rem;
 }

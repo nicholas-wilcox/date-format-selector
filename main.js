@@ -1,21 +1,12 @@
-const omitFromDateOptions = [
-	"timeStyle",
-];
-
-const omitFromTimeOptions = [
-	"dateStyle",
-];
-
 const params = new URLSearchParams(window.location.search);
-const inputDateSelector = document.querySelector('#inputDate');
-const useNowCheckbox = document.querySelector('#useNow');
-const inputDateForm = document.querySelector('#inputDateForm');
-const outputVisibilityForm = document.querySelector('#outputVisibilityForm');
+//const inputDateSelector = document.querySelector('#inputDate');
+//const useNowCheckbox = document.querySelector('#useNow');
+//const inputDateForm = document.querySelector('#inputDateForm');
+//const outputVisibilityForm = document.querySelector('#outputVisibilityForm');
 const outputContainer = document.querySelector('#output');
 
 let inputDate;
 let updateDateInterval;
-let formatOptions = {};
 
 function computeInputDate() {
 	useNowCheckbox.checked = false;
@@ -62,11 +53,6 @@ function setInputDateToNow() {
 	updateOutput();
 }
 
-function onFormatOptionRadioInput(event) {
-	formatOptions = Object.assign(formatOptions, { [event.target.name]: event.target.value });
-	updateOutput();
-}
-
 function updateOutputVisibility() {
 	const showList = params.getAll('s');
 	let shouldHide;
@@ -100,8 +86,8 @@ useNowCheckbox.addEventListener('change', toggleUseNow);
 inputDateSelector.addEventListener('input', computeInputDate);
 document.querySelectorAll('#outputVisibilityForm input[type=radio]')
 	.forEach(radio => radio.addEventListener('input', updateOutputVisibility));
-document.querySelectorAll('#formatOptionsForm input[type=radio]')
-	.forEach(radio => radio.addEventListener('input', onFormatOptionRadioInput));
+//document.querySelectorAll('#formatOptionsForm input[type=radio]')
+//	.forEach(radio => radio.addEventListener('input', onFormatOptionRadioInput));
 
 // Initialize values
 inputDate = new Date();

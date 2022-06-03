@@ -4,6 +4,8 @@
 		<meta charset="utf-8">
 		<title>Date Format Selector</title>
 		<link rel="stylesheet" href="./styles.css">
+		<script src="./form-util.js" defer></script>
+		<script src="./date-util.js" defer></script>
 		<script src="./main.js" defer></script>
 	</head>
 	<body>
@@ -46,25 +48,149 @@
 
 		<!-- Formatting Options -->
 		<form id="formatOptionsForm">
-			<h3>dateStyle</h3>
-			<input type="radio" id="dateStyleFull" name="dateStyle" value="full">
-			<label for="dateStyleFull">full</label>
-			<input type="radio" id="dateStyleLong" name="dateStyle" value="long">
-			<label for="dateStyleLong">long</label>
-			<input type="radio" id="dateStyleMedium" name="dateStyle" value="medium">
-			<label for="dateStyleMedium">medium</label>
-			<input type="radio" id="dateStyleShort" name="dateStyle" value="short">
-			<label for="dateStyleShort">short</label>
+			<div>
+				<h3>dateStyle</h3>
+				<input type="radio" id="dateStyleFull" name="dateStyle" value="full">
+				<label for="dateStyleFull">full</label>
+				<input type="radio" id="dateStyleLong" name="dateStyle" value="long">
+				<label for="dateStyleLong">long</label>
+				<input type="radio" id="dateStyleMedium" name="dateStyle" value="medium">
+				<label for="dateStyleMedium">medium</label>
+				<input type="radio" id="dateStyleShort" name="dateStyle" value="short">
+				<label for="dateStyleShort">short</label>
+			</div>
 
-			<h3>timeStyle</h3>
-			<input type="radio" id="timeStyleFull" name="timeStyle" value="full">
-			<label for="timeStyleFull">full</label>
-			<input type="radio" id="timeStyleLong" name="timeStyle" value="long">
-			<label for="timeStyleLong">long</label>
-			<input type="radio" id="timeStyleMedium" name="timeStyle" value="medium">
-			<label for="timeStyleMedium">medium</label>
-			<input type="radio" id="timeStyleShort" name="timeStyle" value="short">
-			<label for="timeStyleShort">short</label>
+			<div>
+				<h3>timeStyle</h3>
+				<input type="radio" id="timeStyleFull" name="timeStyle" value="full">
+				<label for="timeStyleFull">full</label>
+				<input type="radio" id="timeStyleLong" name="timeStyle" value="long">
+				<label for="timeStyleLong">long</label>
+				<input type="radio" id="timeStyleMedium" name="timeStyle" value="medium">
+				<label for="timeStyleMedium">medium</label>
+				<input type="radio" id="timeStyleShort" name="timeStyle" value="short">
+				<label for="timeStyleShort">short</label>
+			</div>
+
+			<div>
+				<h3>formatMatcher</h3>
+				<input type="radio" id="formatMatcherBasic" name="formatMatcher" value="basic">
+				<label for="formatMatcherBasic">basic</label>
+				<input type="radio" id="formatMatcherBestFit" name="formatMatcher" value="best fit">
+				<label for="formatMatcherBestFit">best fit</label>
+			</div>
+
+			<div>
+				<h3>weekday</h3>
+				<input type="radio" id="weekdayNarrow" name="weekday" value="narrow">
+				<label for="weekdayNarrow">narrow</label>
+				<input type="radio" id="weekdayShort" name="weekday" value="short">
+				<label for="weekdayShort">short</label>
+				<input type="radio" id="weekdayLong" name="weekday" value="long">
+				<label for="weekdayLong">long</label>
+			</div>
+
+			<div>
+				<h3>era</h3>
+				<input type="radio" id="eraNarrow" name="era" value="narrow">
+				<label for="eraNarrow">narrow</label>
+				<input type="radio" id="eraShort" name="era" value="short">
+				<label for="eraShort">short</label>
+				<input type="radio" id="eraLong" name="era" value="long">
+				<label for="eraLong">long</label>
+			</div>
+
+			<div>
+				<h3>year</h3>
+				<input type="radio" id="year2digit" name="year" value="2-digit">
+				<label for="year2digit">2-digit</label>
+				<input type="radio" id="yearNumeric" name="year" value="numeric">
+				<label for="yearNumeric">numeric</label>
+			</div>
+
+			<div>
+				<h3>month</h3>
+				<input type="radio" id="month2digit" name="month" value="2-digit">
+				<label for="month2digit">2-digit</label>
+				<input type="radio" id="monthNumeric" name="month" value="numeric">
+				<label for="monthNumeric">numeric</label>
+				<input type="radio" id="monthNarrow" name="month" value="narrow">
+				<label for="monthNarrow">narrow</label>
+				<input type="radio" id="monthShort" name="month" value="short">
+				<label for="monthShort">short</label>
+				<input type="radio" id="monthLong" name="month" value="long">
+				<label for="monthLong">long</label>
+			</div>
+
+			<div>
+				<h3>day</h3>
+				<input type="radio" id="day2digit" name="day" value="2-digit">
+				<label for="day2digit">2-digit</label>
+				<input type="radio" id="dayNumeric" name="day" value="numeric">
+				<label for="dayNumeric">numeric</label>
+			</div>
+
+			<div>
+				<h3>dayPeriod</h3>
+				<input type="radio" id="dayPeriodNarrow" name="dayPeriod" value="narrow">
+				<label for="dayPeriodNarrow">narrow</label>
+				<input type="radio" id="dayPeriodShort" name="dayPeriod" value="short">
+				<label for="dayPeriodShort">short</label>
+				<input type="radio" id="dayPeriodLong" name="dayPeriod" value="long">
+				<label for="dayPeriodLong">long</label>
+			</div>
+
+			<div>
+				<h3>hour</h3>
+				<input type="radio" id="hour2digit" name="hour" value="2-digit">
+				<label for="hour2digit">2-digit</label>
+				<input type="radio" id="hourNumeric" name="hour" value="numeric">
+				<label for="hourNumeric">numeric</label>
+			</div>
+
+			<div>
+				<h3>minute</h3>
+				<input type="radio" id="minute2digit" name="minute" value="2-digit">
+				<label for="minute2digit">2-digit</label>
+				<input type="radio" id="minuteNumeric" name="minute" value="numeric">
+				<label for="minuteNumeric">numeric</label>
+			</div>
+
+			<div>
+				<h3>second</h3>
+				<input type="radio" id="second2digit" name="second" value="2-digit">
+				<label for="second2digit">2-digit</label>
+				<input type="radio" id="secondNumeric" name="second" value="numeric">
+				<label for="secondNumeric">numeric</label>
+			</div>
+
+			<div>
+				<h3>fractionalSecondDigits</h3>
+				<input type="radio" id="fractionalSecondDigits0" name="fractionalSecondDigits" value="0">
+				<label for="fractionalSecondDigits0">0</label>
+				<input type="radio" id="fractionalSecondDigits1" name="fractionalSecondDigits" value="1">
+				<label for="fractionalSecondDigits1">1</label>
+				<input type="radio" id="fractionalSecondDigits2" name="fractionalSecondDigits" value="2">
+				<label for="fractionalSecondDigits2">2</label>
+				<input type="radio" id="fractionalSecondDigits3" name="fractionalSecondDigits" value="3">
+				<label for="fractionalSecondDigits3">3</label>
+			</div>
+
+			<div>
+				<h3>timeZoneName</h3>
+				<input type="radio" id="timeZoneNameShort" name="timeZoneName" value="short">
+				<label for="timeZoneNameShort">short</label>
+				<input type="radio" id="timeZoneNameLong" name="timeZoneName" value="long">
+				<label for="timeZoneNameLong">long</label>
+				<input type="radio" id="timeZoneNameShortOffset" name="timeZoneName" value="shortOffset">
+				<label for="timeZoneNameShortOffset">shortOffset</label>
+				<input type="radio" id="timeZoneNameLongOffset" name="timeZoneName" value="longOffset">
+				<label for="timeZoneNameLongOffset">longOffset</label>
+				<input type="radio" id="timeZoneNameShortGeneric" name="timeZoneName" value="shortGeneric">
+				<label for="timeZoneNameShortGeneric">shortGeneric</label>
+				<input type="radio" id="timeZoneNameLongGeneric" name="timeZoneName" value="longGeneric">
+				<label for="timeZoneNameLongGeneric">longGeneric</label>
+			</div>
 		</form>
 		<div id="output" class="hidden">
 			<table>

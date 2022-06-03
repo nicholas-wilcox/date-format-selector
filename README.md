@@ -70,3 +70,46 @@ but you can always refresh the page to utilize the same query again.
 - long
 - medium
 - short
+
+### Design Overview
+
+The primary source material for this utility is ECMA-402,
+specifically section [11: DateTimeFormat Objects](https://tc39.es/ecma402/#datetimeformat-objects).
+We begin with the [specification for the `Intl.DateTimeFormat` constructor](https://tc39.es/ecma402/#sec-intl.datetimeformat):
+
+> 3. Perform ? InitializeDateTimeFormat(dateTimeFormat, locales, options).
+
+In `InitializeDateTimeFormat`...
+
+> 2. Set options to ? ToDateTimeOptions(options, "any", "date").
+
+`ToDateTimeOptions(options, required, defaults)` (section [11.5.1](https://tc39.es/ecma402/#sec-todatetimeoptions)) is where
+things get interesting.
+For our purposes, the algorithm does the following:
+
+1. Let *needDefaults* be **true**.
+
+2. Check the *required* argument (which was given as **"any"**).
+   There exists a pair of lists of different property names, which apply to either **"date"** options or **"time"** options.
+   If the value of *required* applies to one or both of these types, then *options* will be indexed with each of the property names.
+   If any of these properties is defined in *options*, then *needDefaults* is set to **false**.
+
+   | *required*       | *options* property                                                          |
+   |------------------|-----------------------------------------------------------------------------|
+   | **"date"/"any"** | **weekday**, **year**, **month**, **day**                                   |
+   | **"time"/"any"** | **dayPeriod**, **hour**, **minute**, **second**, **fractionalSecondDigits** |
+
+3. If **dateStyle** or **timeStyle** are defined in *options*, then let *needDefault* be **false**.
+
+4. Throw a **TypeError** exception if *required* is **"date"** and **timeStyle** is defined,
+   or vice-versa with **"time"** and **dateStyle**.
+
+5. If *needDefaults* is **true**, then check *defaults* (either **"date"**, **"time"**, or **"all"**).
+   Set the following properties to **"numeric"** in each case that applies:
+
+   | *defaults*       | *options* property               |
+   |------------------|----------------------------------|
+   | **"date"/"all"** | **year**, **month**, **day**     |
+   | **"time"/"all"** | **hour**, **minute**, **second** |
+
+6. Return *options*.
