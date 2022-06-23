@@ -1,48 +1,49 @@
 const FORMAT_PROPERTIES = [
-	'weekday',
-	'era',
-	'year',
-	'month',
-	'day',
-	'dayPeriod',
-	'hour',
-	'minute',
-	'second',
-	'fractionalSecondDigits',
-	'timeZoneName',
+  'weekday',
+  'era',
+  'year',
+  'month',
+  'day',
+  'dayPeriod',
+  'hour',
+  'minute',
+  'second',
+  'fractionalSecondDigits',
+  'timeZoneName',
+];
+
+const DATE_FORMAT_PROPERTIES = [
+  'era',
+  'weekday',
+  'year',
+  'month',
+  'day',
 ];
 
 const STYLE_PROPERTIES = [
-	'dateStyle',
-	'timeStyle',
+  'dateStyle',
+  'timeStyle',
 ];
-
-const inputDateSelector = document.querySelector('#inputDate');
-const useNowCheckbox = document.querySelector('#useNow');
-const inputDateForm = document.querySelector('#inputDateForm');
-const outputVisibilityForm = document.querySelector('#outputVisibilityForm');
 
 let formatOptions = {};
 
 function clearProperties(...props) {
-	props.forEach(key => {
-		delete formatOptions[key];
-		document.querySelectorAll(`input[name=${key}]`).forEach(input => input.checked = false);
-	});
+  props.forEach(key => {
+    delete formatOptions[key];
+    const rg = document.querySelector(`radio-group[name="${key}"]`);
+    rg?.clear();
+  });
 }
 
-function onFormatOptionChange(event) {
-	if (STYLE_PROPERTIES.includes(event.target.name)) {
-		clearProperties.apply(null, FORMAT_PROPERTIES);
-	}
-	if (FORMAT_PROPERTIES.includes(event.target.name)) {
-		clearProperties.apply(null, STYLE_PROPERTIES);
-	}
-	formatOptions = Object.assign(formatOptions, { [event.target.name]: event.target.value || undefined });
-	updateOutput();
+function onRadioGroupInput(event) {
+  if (STYLE_PROPERTIES.includes(event.detail.name)) {
+    clearProperties.apply(null, FORMAT_PROPERTIES);
+  }
+  if (FORMAT_PROPERTIES.includes(event.detail.name)) {
+    clearProperties.apply(null, STYLE_PROPERTIES);
+  }
+  formatOptions = Object.assign(formatOptions, { [event.detail.name]: event.detail.value || undefined });
+  updateOutput();
 }
 
-document.querySelectorAll('#formatOptionsForm input[type=radio]')
-	.forEach(radio => radio.addEventListener('input', onFormatOptionChange));
-document.querySelectorAll('#formatOptionsForm select')
-	.forEach(selector => selector.addEventListener('change', onFormatOptionChange));
+document.querySelectorAll('radio-group').forEach(rg => rg.addEventListener('radioGroupInput', onRadioGroupInput));

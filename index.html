@@ -1,244 +1,109 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Date Format Selector</title>
-		<link rel="stylesheet" href="./styles.css">
-		<script src="./form-util.js" defer></script>
-		<script src="./date-util.js" defer></script>
-		<script src="./main.js" defer></script>
-	</head>
-	<body>
-		<h1 class="mainHeader">Date Format Selector</h1>
-		<form id="inputDateForm">
-			<div>
-				<label for="inputDate">Input Date:</label>
-				<input type="datetime-local" step="1" id="inputDate" name="inputDate">
-			</div>
-			<div>
-				<input type="checkbox" id="useNow" name="useNow">
-				<label for="useNow">Use Current Time</label>
-			</div>
-		</form>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Date Format Selector</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./form-util.js" defer></script>
+    <script src="./radio-group.js" defer></script>
+    <script src="./main.js" defer></script>
+  </head>
+  <body>
+    <h1 class="mainHeader">Date Format Selector</h1>
+    <form id="inputDateForm">
+      <div>
+        <label for="inputDate">Input Date:</label>
+        <input type="datetime-local" step="1" id="inputDate" name="inputDate">
+      </div>
+      <div>
+        <input type="checkbox" id="useNow" name="useNow">
+        <label for="useNow">Use Current Time</label>
+      </div>
+    </form>
 
-		<form id="outputVisibilityForm">
-			<div>
-				<label for="showNonLocale">
-					<input type="radio" id="showNonLocale" name="showNonLocale" value="true">
-					Show non-Locale output
-				</label>
-				<label for="hideNonLocale">
-					<input type="radio" id="hideNonLocale" name="showNonLocale" value="false">
-					Hide non-Locale output
-				</label>
-			</div>
+    <span id="output"></span>
 
-			<div>
-				<label for="showRedundant">
-					<input type="radio" id="showRedundant" name="showRedundant" value="true">
-					Show redundant Date/Time output
-				</label>
-				<label for="hideRedundant">
-					<input type="radio" id="hideRedundant" name="showRedundant" value="false">
-					Hide redundant Date/Time output
-				</label>
-			</div>
-		</form>
+    <!-- Formatting Options -->
+    <form id="formatOptionsForm">
+      <fieldset id="styleOptions" class="optionSet">
+        <legend>Style Options</legend>
+        <radio-group name="dateStyle" data-values="short,medium,long,full"></radio-group>
+        <radio-group name="timeStyle" data-values="short,medium,long,full"></radio-group>
+      </fieldSet>
 
+      <fieldset id="dateOptions" class="optionSet">
+        <legend>Date Options</legend>
+        <radio-group name="weekday" data-values="narrow,short,long"></radio-group>
+        <radio-group name="era" data-values="narrow,short,long"></radio-group>
+        <radio-group name="year" data-values="2-digit,numeric"></radio-group>
+        <radio-group name="month" data-values="2-digit,numeric,narrow,short,long"></radio-group>
+        <radio-group name="day" data-values="2-digit,numeric"></radio-group>
+      </fieldSet>
 
-		<!-- Formatting Options -->
-		<form id="formatOptionsForm">
-			<div>
-				<h3>dateStyle</h3>
-				<input type="radio" id="dateStyleFull" name="dateStyle" value="full">
-				<label for="dateStyleFull">full</label>
-				<input type="radio" id="dateStyleLong" name="dateStyle" value="long">
-				<label for="dateStyleLong">long</label>
-				<input type="radio" id="dateStyleMedium" name="dateStyle" value="medium">
-				<label for="dateStyleMedium">medium</label>
-				<input type="radio" id="dateStyleShort" name="dateStyle" value="short">
-				<label for="dateStyleShort">short</label>
-			</div>
+      <fieldset id="timeOptions" class="optionSet">
+        <legend>Time Options</legend>
+        <radio-group name="dayPeriod" data-values="narrow,short,long"></radio-group>
+        <radio-group name="hour" data-values="2-digit,numeric"></radio-group>
+        <radio-group name="minute" data-values="2-digit,numeric"></radio-group>
+        <radio-group name="second" data-values="2-digit,numeric"></radio-group>
+        <radio-group name="fractionalSecondDigits" data-values="1,2,3"></radio-group>
+        <radio-group name="timeZoneName" data-values="short,long,shortOffset,longOffset,shortGeneric,longGeneric"></radio-group>
+      </fieldSet>
+    </form>
 
-			<div>
-				<h3>timeStyle</h3>
-				<input type="radio" id="timeStyleFull" name="timeStyle" value="full">
-				<label for="timeStyleFull">full</label>
-				<input type="radio" id="timeStyleLong" name="timeStyle" value="long">
-				<label for="timeStyleLong">long</label>
-				<input type="radio" id="timeStyleMedium" name="timeStyle" value="medium">
-				<label for="timeStyleMedium">medium</label>
-				<input type="radio" id="timeStyleShort" name="timeStyle" value="short">
-				<label for="timeStyleShort">short</label>
-			</div>
+    <!-- Template for a radio group, expects to contain instances of the radio-input-template -->
+    <template id="radio-group-template">
+      <style>
+        :host {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          width: fit-content;
+        }
 
-			<div>
-				<h3>formatMatcher</h3>
-				<input type="radio" id="formatMatcherBasic" name="formatMatcher" value="basic">
-				<label for="formatMatcherBasic">basic</label>
-				<input type="radio" id="formatMatcherBestFit" name="formatMatcher" value="best fit">
-				<label for="formatMatcherBestFit">best fit</label>
-			</div>
+        .radio-input-container {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0 0.25rem;
+          width: fit-content;
+        }
 
-			<div>
-				<h3>weekday</h3>
-				<input type="radio" id="weekdayNarrow" name="weekday" value="narrow">
-				<label for="weekdayNarrow">narrow</label>
-				<input type="radio" id="weekdayShort" name="weekday" value="short">
-				<label for="weekdayShort">short</label>
-				<input type="radio" id="weekdayLong" name="weekday" value="long">
-				<label for="weekdayLong">long</label>
-			</div>
+        input[type="radio"] {
+          margin: 0;
+          padding: 0;
+          cursor: pointer;
+        }
 
-			<div>
-				<h3>era</h3>
-				<input type="radio" id="eraNarrow" name="era" value="narrow">
-				<label for="eraNarrow">narrow</label>
-				<input type="radio" id="eraShort" name="era" value="short">
-				<label for="eraShort">short</label>
-				<input type="radio" id="eraLong" name="era" value="long">
-				<label for="eraLong">long</label>
-			</div>
+        #header {
+          margin: 0;
+          margin-right: 0.5rem;
+          display: inline-block;
+        }
 
-			<div>
-				<h3>year</h3>
-				<input type="radio" id="year2digit" name="year" value="2-digit">
-				<label for="year2digit">2-digit</label>
-				<input type="radio" id="yearNumeric" name="year" value="numeric">
-				<label for="yearNumeric">numeric</label>
-			</div>
+        #clearButton {
+          cursor: pointer;
+          visibility: hidden;
+        }
 
-			<div>
-				<h3>month</h3>
-				<input type="radio" id="month2digit" name="month" value="2-digit">
-				<label for="month2digit">2-digit</label>
-				<input type="radio" id="monthNumeric" name="month" value="numeric">
-				<label for="monthNumeric">numeric</label>
-				<input type="radio" id="monthNarrow" name="month" value="narrow">
-				<label for="monthNarrow">narrow</label>
-				<input type="radio" id="monthShort" name="month" value="short">
-				<label for="monthShort">short</label>
-				<input type="radio" id="monthLong" name="month" value="long">
-				<label for="monthLong">long</label>
-			</div>
+        :host([selected]) #clearButton {
+          visibility: visible;
+        }
+      </style>
+      <div>
+        <h3 id="header"></h3>
+        <button id="clearButton">Clear</button>
+      </div>
+    </template>
 
-			<div>
-				<h3>day</h3>
-				<input type="radio" id="day2digit" name="day" value="2-digit">
-				<label for="day2digit">2-digit</label>
-				<input type="radio" id="dayNumeric" name="day" value="numeric">
-				<label for="dayNumeric">numeric</label>
-			</div>
-
-			<div>
-				<h3>dayPeriod</h3>
-				<input type="radio" id="dayPeriodNarrow" name="dayPeriod" value="narrow">
-				<label for="dayPeriodNarrow">narrow</label>
-				<input type="radio" id="dayPeriodShort" name="dayPeriod" value="short">
-				<label for="dayPeriodShort">short</label>
-				<input type="radio" id="dayPeriodLong" name="dayPeriod" value="long">
-				<label for="dayPeriodLong">long</label>
-			</div>
-
-			<div>
-				<h3>hour</h3>
-				<input type="radio" id="hour2digit" name="hour" value="2-digit">
-				<label for="hour2digit">2-digit</label>
-				<input type="radio" id="hourNumeric" name="hour" value="numeric">
-				<label for="hourNumeric">numeric</label>
-			</div>
-
-			<div>
-				<h3>minute</h3>
-				<input type="radio" id="minute2digit" name="minute" value="2-digit">
-				<label for="minute2digit">2-digit</label>
-				<input type="radio" id="minuteNumeric" name="minute" value="numeric">
-				<label for="minuteNumeric">numeric</label>
-			</div>
-
-			<div>
-				<h3>second</h3>
-				<input type="radio" id="second2digit" name="second" value="2-digit">
-				<label for="second2digit">2-digit</label>
-				<input type="radio" id="secondNumeric" name="second" value="numeric">
-				<label for="secondNumeric">numeric</label>
-			</div>
-
-			<div>
-				<h3>fractionalSecondDigits</h3>
-				<input type="radio" id="fractionalSecondDigits0" name="fractionalSecondDigits" value="0">
-				<label for="fractionalSecondDigits0">0</label>
-				<input type="radio" id="fractionalSecondDigits1" name="fractionalSecondDigits" value="1">
-				<label for="fractionalSecondDigits1">1</label>
-				<input type="radio" id="fractionalSecondDigits2" name="fractionalSecondDigits" value="2">
-				<label for="fractionalSecondDigits2">2</label>
-				<input type="radio" id="fractionalSecondDigits3" name="fractionalSecondDigits" value="3">
-				<label for="fractionalSecondDigits3">3</label>
-			</div>
-
-			<div>
-				<h3>timeZoneName</h3>
-				<input type="radio" id="timeZoneNameShort" name="timeZoneName" value="short">
-				<label for="timeZoneNameShort">short</label>
-				<input type="radio" id="timeZoneNameLong" name="timeZoneName" value="long">
-				<label for="timeZoneNameLong">long</label>
-				<input type="radio" id="timeZoneNameShortOffset" name="timeZoneName" value="shortOffset">
-				<label for="timeZoneNameShortOffset">shortOffset</label>
-				<input type="radio" id="timeZoneNameLongOffset" name="timeZoneName" value="longOffset">
-				<label for="timeZoneNameLongOffset">longOffset</label>
-				<input type="radio" id="timeZoneNameShortGeneric" name="timeZoneName" value="shortGeneric">
-				<label for="timeZoneNameShortGeneric">shortGeneric</label>
-				<input type="radio" id="timeZoneNameLongGeneric" name="timeZoneName" value="longGeneric">
-				<label for="timeZoneNameLongGeneric">longGeneric</label>
-			</div>
-		</form>
-		<div id="output" class="hidden">
-			<table>
-				<colgroup>
-					<col class="functionName">
-					<col class="functionOutput">
-				</colgroup>
-				<thead>
-					<tr>
-						<th>Function</th>
-						<th>Output</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="dateStringOutputRow" row-code="ts">
-						<td id="toStringLabel" class="functionNameLabel">toString</td>
-						<td id="toStringOutput"></td>
-					</tr>
-					<tr class="dateStringOutputRow" row-code="tds">
-						<td id="toDateStringLabel" class="functionNameLabel">toDateString</td>
-						<td id="toDateStringOutput"></td>
-					</tr>
-					<tr class="dateStringOutputRow" row-code="tts">
-						<td id="toTimeStringLabel" class="functionNameLabel">toTimeString</td>
-						<td id="toTimeStringOutput"></td>
-					</tr>
-					<tr class="dateStringOutputRow" row-code="tis">
-						<td id="toISOStringLabel" class="functionNameLabel">toISOString</td>
-						<td id="toISOStringOutput"></td>
-					</tr>
-					<tr class="dateStringOutputRow" row-code="tus">
-						<td id="toUTCStringLabel" class="functionNameLabel">toUTCString</td>
-						<td id="toUTCStringOutput"></td>
-					</tr>
-					<tr class="dateStringOutputRow" row-code="tls">
-						<td id="toLocaleStringLabel" class="functionNameLabel">toLocaleString</td>
-						<td id="toLocaleStringOutput"></td>
-					</tr>
-					<tr class="dateStringOutputRow" row-code="tlds">
-						<td id="toLocaleDateStringLabel" class="functionNameLabel">toLocaleDateString</td>
-						<td id="toLocaleDateStringOutput"></td>
-					</tr>
-					<tr class="dateStringOutputRow" row-code="tlts">
-						<td id="toLocaleTimeStringLabel" class="functionNameLabel">toLocaleTimeString</td>
-						<td id="toLocaleTimeStringOutput"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</body>
+    <!-- Template for an individual radio selector -->
+    <template id="radio-input-template">
+      <label class="radio-input-container">
+        <input type="radio">
+        <span class="radio-label"><span>
+      </label>
+    </template>
+  </body>
 </html>

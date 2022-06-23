@@ -1,23 +1,28 @@
 .mainHeader {
-	text-align: center;
+  text-align: center;
 }
 
 .functionName {
-	width: min-content;
+  width: min-content;
 }
 
 .functionNameLabel {
-	font-family: monospace;
-	text-align: right;
+  font-family: monospace;
+  text-align: right;
 }
 
 .hidden {
-	display: none;
+  display: none;
 }
 
 #formatOptionsForm {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(25%, max-content));
-	border: 1px solid black;
-	padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.optionSet {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
