@@ -7,6 +7,13 @@
   text-align: center;
 }
 
+.intro {
+  max-width: 60ch;
+  margin: auto;
+  padding: 0 0.5rem;
+  line-height: 1.5;
+}
+
 #formatOptionsForm {
   display: flex;
   flex-wrap: wrap;
@@ -68,4 +75,9 @@ legend {
 
 input.error {
   outline: 2px solid red;
+}
+
+footer {
+  text-align: center;
+  padding: 0.5rem;
 }

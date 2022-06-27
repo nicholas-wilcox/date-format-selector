@@ -12,6 +12,14 @@
   <body>
     <h1 class="mainHeader">Date Format Selector</h1>
 
+    <p class="intro">
+      This is a micro application that will let you easily (re)configure options for the
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString">Date.toLocaleString()</a> function.
+      Please consult <a href="./README.md" target="_blank">the README</a>
+      (also hosted <a href="https://github.com/nicholas-wilcox/date-format-selector/blob/main/README.md" target="blank">on GitHub</a>)
+      for information on how to use it.
+    </p>
+
     <div id="dateHeader">
       <form id="inputDateForm">
         <div>
@@ -59,6 +67,10 @@
         <radio-group name="timeZoneName" data-values="short,long,shortOffset,longOffset,shortGeneric,longGeneric"></radio-group>
       </fieldSet>
     </form>
+
+    <footer>
+      Made with &#x1F496; by Nick @ <a href="https://linicks.dev" target="_blank">linicks.dev</a>.
+    </footer>
 
     <!-- Template for a radio group, expects to contain instances of the radio-input-template -->
     <template id="radio-group-template">
