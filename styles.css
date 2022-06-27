@@ -9,13 +9,13 @@
 
 #formatOptionsForm {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
 #dateHeader {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 1rem;
   position: sticky;
   top: 0;
@@ -30,8 +30,20 @@
   gap: 0.5rem;
 }
 
+#localeAndTimeZone {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 0.25rem;;
+  align-items: baseline;
+}
+
+#localeAndTimeZone label {
+  justify-self: end;
+}
+
 #output {
   font-size: 1.25rem;
+  flex-basis: 100%;
 }
 
 .optionSet {
@@ -40,6 +52,8 @@
   flex-wrap: wrap;
   padding: 1rem;
   margin-top: 1rem;
+  flex-basis: min(50vw, 400px);
+  flex-grow: 1;
 }
 
 legend {
