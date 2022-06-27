@@ -18,7 +18,7 @@ function computeInputDate() {
 }
 
 function updateOutput() {
-  output.innerText = date.toLocaleString(locales, Object.assign({timeZone, ...formatOptions}));
+  output.innerText = date.toLocaleString(locales, {timeZone, ...formatOptions});
 }
 
 function toggleUseCurrentTime() {
