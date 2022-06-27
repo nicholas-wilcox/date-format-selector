@@ -34,14 +34,14 @@
   gap: 0.5rem;
 }
 
-#localeAndTimeZone {
+#localesAndTimeZone {
   display: grid;
   grid-template-columns: max-content 1fr;
   gap: 0.5rem 0.25rem;;
   align-items: baseline;
 }
 
-#localeAndTimeZone label {
+#localesAndTimeZone label {
   justify-self: end;
 }
 

@@ -1,11 +1,11 @@
-const output = document.getElementById('output');
-const inputDateSelector = document.getElementById('inputDate');
+const dateInput = document.getElementById('dateInput');
 const useNowCheckbox = document.getElementById('useNow');
-const inputLocale = document.getElementById('locale');
-const timeZoneInput = document.getElementById('timeZone');
-const inputDateForm = document.getElementById('inputDateForm');
+const localesInput = document.getElementById('localesInput');
+const timeZoneInput = document.getElementById('timeZoneInput');
+const output = document.getElementById('output');
+const dateForm = document.getElementById('dateForm');
 
-let inputDate;
+let date;
 let updateDateInterval;
 let locales;
 let timeZone;
@@ -13,45 +13,42 @@ let timeZone;
 function computeInputDate() {
   useNowCheckbox.checked = false;
   clearInterval(updateDateInterval);
-  const formData = new FormData(inputDateForm);
-  if (formData.get('inputDate')) {
-    inputDate = new Date(formData.get('inputDate'));
-    updateOutput();
-  }
+  date = new Date(dateInput.value);
+  updateOutput();
 }
 
 function updateOutput() {
-  output.innerText = inputDate.toLocaleString(locales, Object.assign({timeZone, ...formatOptions}));
+  output.innerText = date.toLocaleString(locales, Object.assign({timeZone, ...formatOptions}));
 }
 
 function toggleUseCurrentTime() {
   clearInterval(updateDateInterval);
   if (useNowCheckbox.checked) {
-    inputDateSelector.value = "";
+    dateInput.value = "";
     setInputDateToNow();
     updateDateInterval = setInterval(setInputDateToNow, 1000);
   }
 }
 
 function setInputDateToNow() {
-  inputDate = new Date();
+  date = new Date();
   updateOutput();
 }
 
 function updateLocale() {
   try {
-    if (inputLocale.value) {
-      const inputLocales = inputLocale.value?.split(/,\s*/).filter(s => s !== '');
+    if (localesInput.value) {
+      const inputLocales = localesInput.value?.split(/,\s*/).filter(s => s !== '');
       const supportedLocales = Intl.DateTimeFormat.supportedLocalesOf(inputLocales);
       if (supportedLocales.length) {
         locales = supportedLocales;
-        inputLocale.classList.remove('error');
+        localesInput.classList.remove('error');
       }
     } else {
-      inputLocale.classList.remove('error');
+      localesInput.classList.remove('error');
     }
   } catch {
-    inputLocale.classList.add('error');
+    localesInput.classList.add('error');
   }
   updateOutput();
 }
@@ -78,14 +75,14 @@ function preventSubmit(event) {
 }
 
 useNowCheckbox.addEventListener('change', toggleUseCurrentTime);
-inputDateSelector.addEventListener('input', computeInputDate);
-inputLocale.addEventListener('input', updateLocale);
-inputLocale.addEventListener('keydown', preventSubmit);
+dateInput.addEventListener('input', computeInputDate);
+localesInput.addEventListener('input', updateLocale);
+localesInput.addEventListener('keydown', preventSubmit);
 timeZoneInput.addEventListener('input', updateTimeZone);
 timeZoneInput.addEventListener('keydown', preventSubmit);
 
 // Initialize values
-inputDate = new Date();
-inputDateSelector.value = inputDate.toISOString().substring(0, 19);
-inputLocale.setAttribute('placeholder', `(e.g. "${navigator.languages[0]}")`);
+date = new Date();
+dateInput.value = date.toISOString().substring(0, 19);
+localesInput.setAttribute('placeholder', `(e.g. "${navigator.languages[0]}")`);
 updateOutput();
