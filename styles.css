@@ -1,6 +1,23 @@
 :root {
+  --bg-color: hsl(270 30% 90%);
+  --text-color: hsl(270 40% 10%);
+  --link-color: hsl(270 80% 40%);
+
   font-family: sans-serif;
-  background-color: white;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: hsl(270 20% 10%);
+    --text-color: hsl(270 30% 90%);
+    --link-color: hsl(270 70% 80%);
+  }
 }
 
 .mainHeader {
@@ -26,9 +43,9 @@
   gap: 1rem;
   position: sticky;
   top: 0;
-  background-color: white;
+  background-color: var(--bg-color);
   padding: 1rem 0;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--text-color);
 }
 
 #dateHeader label {
