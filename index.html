@@ -11,18 +11,28 @@
   </head>
   <body>
     <h1 class="mainHeader">Date Format Selector</h1>
-    <form id="inputDateForm">
-      <div>
-        <label for="inputDate">Input Date:</label>
-        <input type="datetime-local" step="1" id="inputDate" name="inputDate">
-      </div>
-      <div>
-        <input type="checkbox" id="useNow" name="useNow">
-        <label for="useNow">Use Current Time</label>
-      </div>
-    </form>
 
-    <span id="output"></span>
+    <div id="dateHeader">
+      <form id="inputDateForm">
+        <div>
+          <label for="inputDate">Input Date:</label>
+          <input type="datetime-local" step="1" id="inputDate" name="inputDate">
+        </div>
+        <div>
+          <input type="checkbox" id="useNow" name="useNow">
+          <label for="useNow">Use Current Time</label>
+        </div>
+        <div>
+          <label for="locale">Locale:</label>
+          <input type="text" id="locale" name="locale">
+        </div>
+        <div>
+          <label for="timeZone">Time Zone:</label>
+          <input type="text" id="timeZone" name="timeZone">
+        </div>
+      </form>
+      <span id="output"></span>
+    </div>
 
     <!-- Formatting Options -->
     <form id="formatOptionsForm">
@@ -80,6 +90,7 @@
         #header {
           margin: 0;
           margin-right: 0.5rem;
+          font-size: 1.125rem;
           display: inline-block;
         }
 
