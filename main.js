@@ -83,6 +83,11 @@ timeZoneInput.addEventListener('keydown', preventSubmit);
 
 // Initialize values
 date = new Date();
-dateInput.value = date.toISOString().substring(0, 19);
 localesInput.setAttribute('placeholder', `(e.g. "${navigator.languages[0]}")`);
+
+// Need to manually create a date whose local time in UTC is the same as the current time in the local time zone.
+const offsetDate = new Date();
+offsetDate.setTime(date.getTime() - (date.getTimezoneOffset() * 60 * 1000));
+dateInput.value = offsetDate.toISOString().substring(0, 19);
+
 updateOutput();
