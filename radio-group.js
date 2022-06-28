@@ -1,6 +1,19 @@
 const radioGroupTemplate = document.getElementById('radio-group-template');
 const radioInputTemplate = document.getElementById('radio-input-template');
 
+/**
+ * A simple vanilla web component to handle radio groups.
+ *
+ * Attributes:
+ * - data-values: comma-separated list of values, one per radio input.
+ * - name: passed to the `name` attribute in each radio input.
+ *
+ * Dispatches a custom 'radioGroupInput' event that triggers on the radio input
+ * children's 'input' events, with a detail object that specifies the newly selected
+ * values.
+ *
+ * A 'Clear' button appears when an option is selected, which will reset the radio group.
+ */
 class RadioGroup extends HTMLElement {
   get name() {
     return this.getAttribute('name');
@@ -38,7 +51,15 @@ class RadioGroup extends HTMLElement {
   }
 
   update(value) {
-    this.dispatchEvent(new CustomEvent('radioGroupInput', { detail: { name: this.name, value: value } }));
+    this.dispatchEvent(
+      new CustomEvent(
+        'radioGroupInput',
+        {
+          bubbles: true,
+          detail: { name: this.name, value: value }
+        }
+      )
+    );
   }
 
   clear(shouldUpdate = false) {

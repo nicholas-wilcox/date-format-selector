@@ -1,33 +1,51 @@
+const FORMAT_PROPERTIES = [
+  'weekday',
+  'era',
+  'year',
+  'month',
+  'day',
+  'dayPeriod',
+  'hour',
+  'minute',
+  'second',
+  'fractionalSecondDigits',
+  'timeZoneName',
+];
+
+const STYLE_PROPERTIES = [
+  'dateStyle',
+  'timeStyle',
+];
+
+// Element handles
 const dateInput = document.getElementById('dateInput');
 const useNowCheckbox = document.getElementById('useNow');
 const localesInput = document.getElementById('localesInput');
 const timeZoneInput = document.getElementById('timeZoneInput');
 const output = document.getElementById('output');
-const dateForm = document.getElementById('dateForm');
+const optionsForm = document.getElementById('formatOptionsForm');
 
 let date;
 let updateDateInterval;
 let locales;
 let timeZone;
+let formatOptions;
 
-function computeInputDate() {
-  useNowCheckbox.checked = false;
-  clearInterval(updateDateInterval);
-  date = new Date(dateInput.value);
-  updateOutput();
+function setFormatOption(name, value) {
+  Object.assign(formatOptions, { [name]: value || undefined });
+}
+
+/** Unsets any given format options */
+function clearProperties(...props) {
+  props.forEach(key => {
+    delete formatOptions[key];
+    const rg = document.querySelector(`radio-group[name="${key}"]`);
+    rg?.clear();
+  });
 }
 
 function updateOutput() {
-  output.innerText = date.toLocaleString(locales, {timeZone, ...formatOptions});
-}
-
-function toggleUseCurrentTime() {
-  clearInterval(updateDateInterval);
-  if (useNowCheckbox.checked) {
-    dateInput.value = "";
-    setInputDateToNow();
-    updateDateInterval = setInterval(setInputDateToNow, 1000);
-  }
+  output.innerText = date.toLocaleString(locales, { timeZone, ...formatOptions });
 }
 
 function setInputDateToNow() {
@@ -35,7 +53,32 @@ function setInputDateToNow() {
   updateOutput();
 }
 
-function updateLocale() {
+function preventSubmitOnEnter(event) {
+  if (event.code === 'Enter') {
+    event.preventDefault();
+  }
+}
+
+/* Starts a clock and uses its current time. */
+useNowCheckbox.addEventListener('change', () => {
+  clearInterval(updateDateInterval);
+  if (useNowCheckbox.checked) {
+    dateInput.value = "";
+    setInputDateToNow();
+    updateDateInterval = setInterval(setInputDateToNow, 1000);
+  }
+});
+
+/* Use a manually input date value. */
+dateInput.addEventListener('input', () => {
+  useNowCheckbox.checked = false;
+  clearInterval(updateDateInterval);
+  date = new Date(dateInput.value);
+  updateOutput();
+});
+
+/* Handle locale input. */
+localesInput.addEventListener('input', () => {
   try {
     if (localesInput.value) {
       const inputLocales = localesInput.value?.split(/,\s*/).filter(s => s !== '');
@@ -51,12 +94,13 @@ function updateLocale() {
     localesInput.classList.add('error');
   }
   updateOutput();
-}
+});
 
-function updateTimeZone() {
+/* Handle time zone input. */
+timeZoneInput.addEventListener('input', () => {
   try {
     if (timeZoneInput.value) {
-      Intl.DateTimeFormat(undefined, {timeZone: timeZoneInput.value});
+      Intl.DateTimeFormat(undefined, { timeZone: timeZoneInput.value });
       timeZone = timeZoneInput.value;
       timeZoneInput.classList.remove('error');
     } else {
@@ -66,22 +110,26 @@ function updateTimeZone() {
     timeZoneInput.classList.add('error');
   }
   updateOutput();
-}
+});
 
-function preventSubmit(event) {
-  if (event.code === 'Enter') {
-    event.preventDefault();
+// Prevent form submission.
+localesInput.addEventListener('keydown', preventSubmitOnEnter);
+timeZoneInput.addEventListener('keydown', preventSubmitOnEnter);
+
+/* Handle radio input. */
+optionsForm.addEventListener('radioGroupInput', () => {
+  if (STYLE_PROPERTIES.includes(event.detail.name)) {
+    clearProperties.apply(null, FORMAT_PROPERTIES);
+  } else if (FORMAT_PROPERTIES.includes(event.detail.name)) {
+    clearProperties.apply(null, STYLE_PROPERTIES);
   }
-}
 
-useNowCheckbox.addEventListener('change', toggleUseCurrentTime);
-dateInput.addEventListener('input', computeInputDate);
-localesInput.addEventListener('input', updateLocale);
-localesInput.addEventListener('keydown', preventSubmit);
-timeZoneInput.addEventListener('input', updateTimeZone);
-timeZoneInput.addEventListener('keydown', preventSubmit);
+  setFormatOption(event.detail.name, event.detail.value);
+  updateOutput();
+});
 
 // Initialize values
+formatOptions = {};
 date = new Date();
 localesInput.setAttribute('placeholder', `(e.g. "${navigator.languages[0]}")`);
 
