@@ -1,7 +1,7 @@
 # The Date Format Selector
 
-This is a small utility application that allows a JavaScript developer to easily configure date format options.
-It contains a series of form selectors that correspond to different properties of the parameters passed to `Date.toLocaleString()`.
+This is a small utility application for easily configuring date format options.
+It contains a series of form inputs that correspond to different properties of the parameters passed to `Date.toLocaleString()`.
 
 ## Usage
 
