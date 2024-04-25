@@ -6,7 +6,10 @@ the parameters passed to `Date.toLocaleString()`.
 
 ## Usage
 
-Upon opening `index.html` in your browser, you'll see the following:
+After clone the repository or downloading an extracting an archived copy, open
+`index.html` in your web browser. (Please refer to
+[GitHub's documentation](https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives)
+for guidance on how to download source code.)
 
 ### Date Input
 
@@ -15,7 +18,7 @@ with the current time. This selector might appear as a text input on older
 browsers, in which case you must provide a string that is valid input to the
 `Date` constructor.
 
-You may optionally check the "Use Current Time" checkbox to automatically
+You may optionally toggle the "Use Current Time" checkbox to automatically
 increment the computed `Date` value by updating it to the current time once per
 second. Turning this options on automatically clears the manual `datetime-local`
 input, and manually inputting a date will turn this option off.
@@ -51,10 +54,10 @@ is exposed with a radio button group. These options are split into "Date
 Options" and "Time Options". The `dateStyle` and `timeStyle` properties are also
 configurable.
 
-It is [specified](https://tc39.es/ecma402/#sec-initializedatetimeformat) that
-setting any of the options from Table 6 in addition to `dateStyle` or
-`timeStyle` is invalid and will produce an error. Therefore, this application
-will automatically unset options as appropriate.
+It is specified that setting any of the options from Table 6 in addition to
+`dateStyle` or `timeStyle` is invalid and will produce an error
+([source](https://tc39.es/ecma402/#sec-initializedatetimeformat)). Therefore,
+this application will automatically unset options as appropriate.
 
 Refer to the
 [MDN documentation for `DateTimeFormat` parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#parameters)
@@ -62,12 +65,14 @@ for more information.
 
 ### Omitted Options
 
-Aside from the three format options exposed via the language tags in the locales
-input, there are some other options that are not included in this project:
+The locale options that are configurable via Unicode extension keys as described
+above can also be given as object properties, similar to the date-time
+formatting options. However, those properties are omitted from this utility
+application for simplicity.
+
+Three other format options are not included in this project:
 
 - `localeMatcher`: Used for resolving and supplementing the locale arguments.
 - `formatMatcher`: Used for deciding how different subsets of format options are
   formatted.
 - `hour12`: An override for `hourCycle`.
-
-jtcqlna
