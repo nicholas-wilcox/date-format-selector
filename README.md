@@ -39,12 +39,11 @@ on language tags, see
 and
 [the MDN documentation for these extensions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#parameters).
 
-The time zone input accepts valid IANA time zone names. Both this input and the
-locales input will have a red outline when given invalid input. The _effective_
-input (i.e. the values used in `Date.toLocaleString()`) will update when the
-corresponding text input changes to a valid and non-empty value. In other words,
-the locale and time zone will _not_ reset to the browser's default when you
-clear the text inputs.
+The time zone input accepts valid
+[IANA time zone names](https://www.iana.org/time-zones). Both this input and the
+locales input will have a red outline when given invalid values that are not
+recognized. You can reset to your browser's default value by clearing out the
+text inputs.
 
 ### Format Options
 

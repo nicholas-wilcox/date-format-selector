@@ -77,12 +77,14 @@ dateInput.addEventListener("input", () => {
   updateOutput();
 });
 
+const commaSeparationRegex = /,\s*/;
+
 /* Handle locale input. */
 localesInput.addEventListener("input", () => {
   try {
     if (localesInput.value) {
       const inputLocales = localesInput.value
-        ?.split(/,\s*/)
+        ?.split(commaSeparationRegex)
         .filter((s) => s !== "");
       const supportedLocales =
         Intl.DateTimeFormat.supportedLocalesOf(inputLocales);
@@ -91,6 +93,7 @@ localesInput.addEventListener("input", () => {
         localesInput.classList.remove("error");
       }
     } else {
+      locales = undefined;
       localesInput.classList.remove("error");
     }
   } catch {
@@ -107,6 +110,7 @@ timeZoneInput.addEventListener("input", () => {
       timeZone = timeZoneInput.value;
       timeZoneInput.classList.remove("error");
     } else {
+      timeZone = undefined;
       timeZoneInput.classList.remove("error");
     }
   } catch {
