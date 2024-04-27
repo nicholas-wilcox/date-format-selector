@@ -75,3 +75,30 @@ Three other format options are not included in this project:
 - `formatMatcher`: Used for deciding how different subsets of format options are
   formatted.
 - `hour12`: An override for `hourCycle`.
+
+## Developer Notes
+
+This small codebase is both an interactive demo for the `Date.toLocaleString()`
+function and also an example of using vanilla JavaScript to create custom web
+components.
+
+In summary, this involves:
+
+1. creating `<template>` elements in `index.html` and a custom `RadioGroup`
+   class that extends `HTMLElement`,
+2. implementing lifecycle methods for `RadioGroup` to add the templated content
+   to its own "shadow DOM", and
+3. calling `customElements.define("radio-group", RadioGroup)` to link the
+   component to a custom tag name.
+
+The `<radio-group>` component uses data attributes to fill out its DOM with
+radio inputs that all share the same `name` attribute. It also forwards the
+events from the inputs to handlers defined in `main.js`.
+
+Please see the
+[MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) for
+more information on developing and using standardized web components.
+
+`main.js` also has some other state variables, form inputs, and event listeners.
+Overall, the code is meant to be small, lightly commented, and self-documenting,
+but feel free to reach out if you have any questions.
