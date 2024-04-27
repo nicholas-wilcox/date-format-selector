@@ -1,3 +1,5 @@
+// Option properties, split between style shorthand and explicit format options
+const STYLE_PROPERTIES = ["dateStyle", "timeStyle"];
 const FORMAT_PROPERTIES = [
   "weekday",
   "era",
@@ -12,8 +14,6 @@ const FORMAT_PROPERTIES = [
   "timeZoneName",
 ];
 
-const STYLE_PROPERTIES = ["dateStyle", "timeStyle"];
-
 // Element handles
 const dateInput = document.getElementById("dateInput");
 const useNowCheckbox = document.getElementById("useNow");
@@ -22,6 +22,7 @@ const timeZoneInput = document.getElementById("timeZoneInput");
 const output = document.getElementById("output");
 const optionsForm = document.getElementById("formatOptionsForm");
 
+// Global state variables
 let date;
 let updateDateInterval;
 let locales;
@@ -29,6 +30,7 @@ let timeZone;
 let formatOptions;
 
 function setFormatOption(name, value) {
+  // If value is falsy, then just remove the property by assigning to undefined.
   Object.assign(formatOptions, { [name]: value || undefined });
 }
 
@@ -59,7 +61,8 @@ function preventSubmitOnEnter(event) {
   }
 }
 
-/* Starts a clock and uses its current time. */
+// When the user toggles on "Use Current Time" checkbox,
+// then start an interval to reset the time to the current time.
 useNowCheckbox.addEventListener("change", () => {
   clearInterval(updateDateInterval);
   if (useNowCheckbox.checked) {
@@ -69,7 +72,7 @@ useNowCheckbox.addEventListener("change", () => {
   }
 });
 
-/* Use a manually input date value. */
+// Use a manually input date value.
 dateInput.addEventListener("input", () => {
   useNowCheckbox.checked = false;
   clearInterval(updateDateInterval);
@@ -79,8 +82,10 @@ dateInput.addEventListener("input", () => {
 
 const commaSeparationRegex = /,\s*/;
 
-/* Handle locale input. */
+// Handle locale input.
 localesInput.addEventListener("input", () => {
+  // Per the ECMA-402 spec on the Internationalization API (https://tc39.es/ecma402),
+  // the supportedLocalesOf function will throw a RangeError when given a bad locale input.
   try {
     if (localesInput.value) {
       const inputLocales = localesInput.value
@@ -88,11 +93,14 @@ localesInput.addEventListener("input", () => {
         .filter((s) => s !== "");
       const supportedLocales =
         Intl.DateTimeFormat.supportedLocalesOf(inputLocales);
+
+      // Set global state and remove error when we get valid input.
       if (supportedLocales.length) {
         locales = supportedLocales;
         localesInput.classList.remove("error");
       }
     } else {
+      // Empty out the state variable when the input is empty
       locales = undefined;
       localesInput.classList.remove("error");
     }
@@ -102,8 +110,9 @@ localesInput.addEventListener("input", () => {
   updateOutput();
 });
 
-/* Handle time zone input. */
+// Handle time zone input.
 timeZoneInput.addEventListener("input", () => {
+  // Similar situation as above, bad input will throw an error.
   try {
     if (timeZoneInput.value) {
       Intl.DateTimeFormat(undefined, { timeZone: timeZoneInput.value });
@@ -123,8 +132,9 @@ timeZoneInput.addEventListener("input", () => {
 localesInput.addEventListener("keydown", preventSubmitOnEnter);
 timeZoneInput.addEventListener("keydown", preventSubmitOnEnter);
 
-/* Handle radio input. */
+// Handle radio input.
 optionsForm.addEventListener("radioGroupInput", (event) => {
+  // Ensure that setting style options erases all format options and vice-versa.
   if (STYLE_PROPERTIES.includes(event.detail.name)) {
     clearProperties(...FORMAT_PROPERTIES);
   } else if (FORMAT_PROPERTIES.includes(event.detail.name)) {

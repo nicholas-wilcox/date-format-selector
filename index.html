@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Date Format Selector</title>
+
+    <!-- Links to local files -->
     <link rel="stylesheet" href="./styles.css">
     <script src="./radio-group.js" defer></script>
     <script src="./main.js" defer></script>
@@ -21,15 +23,20 @@
 
     <div id="dateHeader">
       <form id="inputDateForm">
+        <!-- Date input -->
         <div>
           <label for="dateInput">Date:</label>
           <input type="datetime-local" step="1" id="dateInput" name="dateInput">
         </div>
+
+        <!-- Current time toggle -->
         <div>
           <input type="checkbox" id="useNow" name="useNow">
           <label for="useNow">Use Current Time</label>
         </div>
       </form>
+
+      <!-- Locales and time zone inputs -->
       <div id="localesAndTimeZone">
         <label for="localesInput">Locales:</label>
         <input type="text" id="localesInput" name="localesInput">
@@ -39,7 +46,7 @@
       <span id="output"></span>
     </div>
 
-    <!-- Formatting Options -->
+    <!-- Style and formatting options -->
     <form id="formatOptionsForm">
       <fieldset id="styleOptions" class="optionSet">
         <legend>Style Options</legend>
@@ -71,8 +78,9 @@
       Made with &#x1F496; by Nick @ <a href="https://linicks.dev" target="_blank">linicks.dev</a>.
     </footer>
 
-    <!-- Template for a radio group, expects to contain instances of the radio-input-template -->
+    <!-- Template for a radio group, expects to contain copies of the radio-input-template -->
     <template id="radio-group-template">
+      <!-- These styles must be declared here because it will be inside of the <radio-group>'s shadow root. -->
       <style>
         :host {
           display: flex;

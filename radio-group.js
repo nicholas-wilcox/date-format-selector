@@ -36,15 +36,16 @@ class RadioGroup extends HTMLElement {
   }
 
   connectedCallback() {
+    // Construct shadow root
     const shadowRoot = this.attachShadow({ mode: "open" });
     shadowRoot.appendChild(radioGroupTemplate.content.cloneNode(true));
 
+    // Initialize attributes, events, and children
     this.header.innerText = this.name;
     this.clearButton.addEventListener("click", () => {
       this.clear();
       this.update(undefined);
     });
-
     this.values.forEach((value) => {
       const radioNode = this.createRadioInputNode(value);
       shadowRoot.appendChild(radioNode);
@@ -67,6 +68,9 @@ class RadioGroup extends HTMLElement {
       .forEach((input) => (input.checked = false));
   }
 
+  /**
+   * Construct a radio input element for this group with a given value.
+   */
   createRadioInputNode(value) {
     const radioNode = radioInputTemplate.content.cloneNode(true);
     const radioInput = radioNode.querySelector("input");
