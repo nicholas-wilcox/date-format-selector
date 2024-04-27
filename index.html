@@ -81,45 +81,7 @@
     <!-- Template for a radio group, expects to contain copies of the radio-input-template -->
     <template id="radio-group-template">
       <!-- These styles must be declared here because it will be inside of the <radio-group>'s shadow root. -->
-      <style>
-        :host {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          width: fit-content;
-        }
-
-        .radio-input-container {
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0 0.25rem;
-          width: fit-content;
-        }
-
-        input[type="radio"] {
-          margin: 0;
-          padding: 0;
-          cursor: pointer;
-        }
-
-        #header {
-          margin: 0;
-          margin-right: 0.5rem;
-          font-size: 1.125rem;
-          display: inline-block;
-        }
-
-        #clearButton {
-          cursor: pointer;
-          visibility: hidden;
-        }
-
-        :host([selected]) #clearButton {
-          visibility: visible;
-        }
-      </style>
+      <link href="./radio-group.styles.css" rel="stylesheet">
       <div>
         <h3 id="header"></h3>
         <button id="clearButton">Clear</button>
