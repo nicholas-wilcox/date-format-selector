@@ -6,8 +6,11 @@ the parameters passed to `Date.toLocaleString()`.
 
 ## Usage
 
-After clone the repository or downloading an extracting an archived copy, open
-`index.html` in your web browser. (Please refer to
+This repository is hosted with GitHub Pages. You can access the application at
+https://nicholas-wilcox.github.io/date-format-selector/.
+
+Alternatively, you can download a copy of the source code and open the
+`index.html` file locally in your browser. (Please refer to
 [GitHub's documentation](https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives)
 for guidance on how to download source code.)
 
